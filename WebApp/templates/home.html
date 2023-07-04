@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+<body>
+
+
+  <!-- ======= Top Bar ======= -->
+
+  <!-- ======= Header ======= -->
+
+  {% block content %}
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container" data-aos="zoom-out" data-aos-delay="100">
+        
+      <h1>Welcome to <span>Online Electronic Store</span></h1>
+      <h2>Our business specializes in curating and showcasing an extensive range of electronics products on our webpage, guiding users to the best deals and seamlessly redirecting them to the corresponding website.</h2>
+      <div class="d-flex">
+        <a href="#featured-services" class="btn-get-started scrollto">Get Started</a>
+        
+       
+      </div>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+   <!-- ======= Featured Services Section ======= -->
+   <section id="featured-services" class="featured-services">
+    <div class="container" data-aos="fade-up">
+       <div class="row">
+          {% if productposts %}
+             {% for product in productposts %}
+             <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-3">
+                <div class="card">
+                
+                   <img src="{{ product.image.url }}" class="card-img-top" alt="{{product.name}}" width="200" height="180">
+                  
+                   <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                      <h4 class="title"><a href="{% url 'product_details' pk=product.id %}">{{ product.name | title}}</a></h4>
+                      <p class="description lead">${{ product.product_price }}</p>
+                      <a href='#' class="btn btn-secondary">Buy</a>
+                   </div>
+                </div>
+             </div>
+             {% endfor %}
+          {% endif %}
+       </div>
+    </div>
+ </section>
+<!-- End Featured Services Section -->
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>About</h2>
+          <h3>Find Out More <span>About Us</span></h3>
+          <p>"Discover Electronics Delight: Your Trusted Source for Fast and Private Product Searches!"</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+            <img src="{% static 'affiliate/assets/img/about.jpg'%}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
+            <h3>Discover the ultimate electronics shopping experience with us.</h3>
+            <p class="fst-italic">
+              At our company, our mission is to provide a comprehensive platform for users to easily find and access a wide variety of electronics products. 
+            </p>
+            <ul>
+              <li>
+                <i class="bx bx-store-alt"></i>
+                <div>
+                  <h5>Our online electronics platform is not only free to use, but also incredibly user-friendly, ensuring a seamless browsing and shopping experience for all.</h5>
+                  <p></p>
+                </div>
+              </li>
+              <li>
+                <i class="bx bx-images"></i>
+                <div>
+                  <h5>We take pride in creating an ad-free and commercial-free environment, allowing our users to explore electronics products without any distractions or interruptions</h5>
+                  <p></p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Skills Section ======= -->
+ 
+
+  </main><!-- End #main -->
+
+  {% endblock %}

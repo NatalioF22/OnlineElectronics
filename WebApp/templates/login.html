@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+
+{%block content%}
+{%if user.is_authenticated%}
+<div class="container-xxl text-center" style="margin-top:150px;margin-bottom:50px">
+    <h1>You are already logged in</h1>
+</div>
+{%else%}
+<div class="container">
+<div style="width: 400px;margin: 0 auto;margin-top: 100px;margin-bottom: 20px;padding: 20px;border-radius: 8px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+   <h1>Login</h1>
+   <small>Only administrators have access to this page at this moment!</small>
+   <br>
+   <form method ="POST" action = "{% url 'login' %}">
+      {%csrf_token%}
+      <div class="mb-3">
+         <label  class="form-label">Username</label>
+         <input type="text" class="form-control"  name="username" placeholder="Enter your username" aria-describedby="text">
+      </div>
+      <div class="mb-3">
+         <label class="form-label">Password</label>
+         <input type="password" class="form-control" name="password" placeholder="Enter your Password">
+      </div>
+      <button type="submit" class="btn btn-secondary">Submit</button>
+   </form>
+</div>
+</div>
+{%endif%}
+{%endblock%}

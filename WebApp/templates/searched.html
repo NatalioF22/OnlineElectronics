@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-xxl text-center justify-content-center text-light">
+    {% if searched %}
+        <h1 class="text-dark" style="margin-top:150px">Results for: "{{ searched }}"</h1><br>
+        <section id="featured-services" class="featured-services">
+            <div class="container" data-aos="fade-up">
+               <div class="row">
+                  {% if products %}
+                     {% for product in products %}
+                     <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="card">
+                        
+                           <img src="{{ product.image.url }}" class="card-img-top" alt="{{product.name}}" width="200" height="180">
+                          
+                           <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                              <h4 class="title"><a href="{% url 'product_details' pk=product.id %}">{{ product.name | title}}</a></h4>
+                              <p class="description lead">${{ product.product_price }}</p>
+                              <a href='#' class="btn btn-secondary">Buy</a>
+                           </div>
+                        </div>
+                     </div>
+                     {% endfor %}
+                  {% endif %}
+               </div>
+            </div>
+         </section>
+    {% else %}
+        <h1 class='text-dark' style="margin-top:150px;margin-bottom:50px">Hey! You forgot to search for a product...</h1>
+    {% endif %}
+</div>
+{% endblock %}
