@@ -114,6 +114,9 @@ def add_product(request):
                 product.save()
                 messages.success(request, "Your Product Has Been Posted!")
                 return redirect('home')
+            else:
+                messages.success(request, "The form is Invalid. Try Again")
+                return redirect('add_product')
         else:
             product_form = ProductForm()
        
