@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ["*"]
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'www.buyelectronics.cloud',
+    'https://www.buyelectronics.cloud',
 ]
 
 # Application definition
