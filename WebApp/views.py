@@ -154,3 +154,6 @@ def delete_product(request, pk):
     else:
         messages.info(request, "You must be logged in!")
         return redirect('home')
+
+def page_not_found(request, slug):
+    return render(request, 'page_not_found.html',{'slug':slug})

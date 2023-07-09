@@ -13,5 +13,6 @@ urlpatterns = [
     path('update_user/',views.update_user,name="update_user"),
     path('add_product/', views.add_product, name='add_product'),
     path('search_products',views.search_products, name = 'search_products'),
-    path('delete_product/<int:pk>', views.delete_product, name="delete_product"),  
+    path('delete_product/<int:pk>', views.delete_product, name="delete_product"), 
+    path('<str:slug>/', views.page_not_found, name = "page_not_found"), 
 ]
