@@ -1,24 +1,29 @@
-
 {% extends 'base.html' %}
 {% block content %}
 <div class="col-md-6 offset-md-3">
    <h1>Add Product</h1>
-   {%if messages%}
-
-  
-      {%for message in messages%}
+   {% if messages %}
+      {% for message in messages %}
       <div class="alert alert-warning" role="alert" style="margin-top:50px">
-         {{message}}
-       </div>
-      
-      {%endfor%}
-   
-   {%endif%}
+         {{ message }}
+      </div>
+      {% endfor %}
+   {% endif %}
    <br>
    <form method="POST" action="" enctype="multipart/form-data">
       {% csrf_token %}
       <br>
+      {% if product_form.errors %}
+      <div class="alert alert-danger" role="alert">
+         {% for field_errors in product_form.errors %}
+            {% for error in field_errors %}
+               {{ error }}
+            {% endfor %}
+         {% endfor %}
+      </div>
+      {% endif %}
       {{ product_form.as_p }}
+     
       <br>
       <button type="submit" class="btn btn-secondary">List Product</button>
    </form>

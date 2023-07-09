@@ -2,27 +2,29 @@
 {% load static %}
 
 <style>
-  /* Large screens */
+/* Large screens */
 @media (min-width: 1200px) {
-  .picture {
+  img {
     width: 400px;
-    height: 300px;
+    height: 200px;
   }
 }
 
 /* Medium screens */
 @media (max-width: 1199px) and (min-width: 768px) {
-  .picture {
+  img {
     width: 300px;
-    height: 225px;
+    height: auto;
+    max-height: 225px;
   }
 }
 
 /* Small screens */
 @media (max-width: 767px) {
-  .picture {
+  img {
     width: 200px;
-    height: 150px;
+    height: auto;
+    max-height: 150px;
   }
 }
 

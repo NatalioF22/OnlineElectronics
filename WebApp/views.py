@@ -108,25 +108,22 @@ def add_product(request):
         if request.method == "POST":
             product_form = ProductForm(request.POST, request.FILES)
             if product_form.is_valid():
-               
                 product = product_form.save(commit=False)
                 product.owner = request.user
                 product.save()
                 messages.success(request, "Your Product Has Been Posted!")
                 return redirect('home')
             else:
-                messages.success(request, "The form is Invalid. Try Again")
+                messages.success(request, "There was an error with your form")
                 return redirect('add_product')
         else:
             product_form = ProductForm()
-       
+
         product_postage = ProductPost.objects.all().order_by("-created_at")
         return render(request, 'add_product.html', {"product_postage": product_postage, "product_form": product_form})
     else:
         product_postage = ProductPost.objects.all().order_by("-created_at")
         return render(request, 'add_product.html', {"product_postage": product_postage})
-
-
         
 def search_products(request):
     
