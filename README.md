@@ -114,8 +114,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ---
 
-For more information or support, please contact <youremail@example.com>
 
----
 
 I hope this README serves you well! Feel free to customize it according to your specific requirements.
