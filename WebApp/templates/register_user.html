@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-xxl text-center" style="margin-top:150px;margin-bottom:50px">
+    <h1>You are already registered and logged in</h1>
+</div>
+{% else %}
+<div class="container">
+    <div style="width: 400px; margin: 0 auto; margin-top: 100px; margin-bottom: 20px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+        <h1>Register</h1>
+        <small>Please fill in the details to create an account.</small>
+        <br>
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="Enter your username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="Enter your email">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" name="password1" placeholder="Enter your password">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" name="password2" placeholder="Confirm your password">
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

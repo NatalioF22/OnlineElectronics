@@ -20,7 +20,7 @@
                 {% if profile.profile_image %}
                 <img src="{{ profile.profile_image.url }}" width="100" height="100" class="rounded-circle" alt="{{ profile.user.username }}"><br>
                 {% else %}
-                <img src="{% static 'images/profile_img.png' %}" width="100" height="100" class="rounded-circle" alt="Profile Image"><br>
+                <img src="{% static 'img/profile_image.png' %}" width="100" height="100" class="rounded-circle" alt="Profile Image"><br>
                 {% endif %}
               </div>
               <br><br/>
@@ -63,7 +63,12 @@
         {% for product in products %}
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5">
           <div class="card">
-            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="object-fit: cover; height: 200px;">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{product.name}}" height="200px" width="100%" style="object-fit:contain">
+            {% else %}
+            <img src="{% static 'img/default_image.jpeg' %}" class="card-img-top" alt="Default Image" height="100%" width="150px" style="object-fit:contain">
+          {% endif %}
+            
             <div class="card-body">
               <h4 class="card-title"><a href="{% url 'product_details' pk=product.id %}">{{ product.name | title }}</a></h4>
               <p class="card-text lead">${{ product.product_price }}</p>

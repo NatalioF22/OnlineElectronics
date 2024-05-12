@@ -1,31 +1,33 @@
-
 from django.contrib import admin
-from django.contrib.auth.models import Group, User
-from .models import Profile,Product
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .models import Profile, Product, Categories
 
-#unregister groups
-#admin.site.unregister(Group)
-
-# Register your models here.
-class ProfileInLine(admin.StackedInline):
+# Extend UserAdmin
+class ProfileInline(admin.StackedInline):
     model = Profile
-#extend User Model
-class UserAdmin(admin.ModelAdmin):
-    model = User
-    #just display username fields on admin page
-    fields = ['username','password']
-    inlines = [ProfileInLine]
-    
-admin.site.unregister(User)
+    can_delete = False
+    verbose_name_plural = 'profile'
 
-#reregister User
-admin.site.register(User, UserAdmin)
-#admin.site.register(Profile)
+class UserAdmin(BaseUserAdmin):
+    inlines = (ProfileInline,)
 
-#register 
-admin.site.register(Product)
 
-class ProductRecordAdmin(admin.ModelAdmin):
-    list_display = ('name','product_description','product_price')
+# Configure Product Admin
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'product_description', 'product_price', 'category')
+    list_select_related = ('category',)  # Optimizes ForeignKey resolution
+    search_fields = ('name', 'product_description', 'product_price')
     ordering = ('name',)
-    search_fields =  ('name','product_description','product_price')
+
+# Configure Category Admin
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+
+# Register models with their custom Admin interfaces
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Categories, CategoryAdmin)
+
+# Optionally, register Profile if needed directly (not recommended if using inlines with User)
+# admin.site.register(Profile)

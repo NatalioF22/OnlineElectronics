@@ -1,27 +1,29 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Product, Profile
+from .models import Product, Profile, Categories
+
+
 
 
 class ProductForm(forms.ModelForm):
-    
-    name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Name'}), required=False)
-    product_description = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product Description', 'rows': 4}),
-    )
-    product_price = forms.CharField(label='', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Price'}), required=False)
-    product_link = forms.CharField(label='', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product link'}), required=False)
-   
     class Meta:
         model = Product
-        fields = ['name', 'product_description', 'product_price', 'product_link', 'image']
-       
+        fields = ['name', 'product_description', 'product_price', 'product_link', 'image', 'category']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Name'}),
+            'product_description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product Description', 'rows': 4}),
+            'product_price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Price'}),
+            'product_link': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Link'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'})
+        }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['product_description'].widget.attrs['class'] = 'form-control'
-        self.fields['product_description'].widget.attrs['placeholder'] = 'Your Product Description'
-        self.fields['product_description'].label = ''
+        self.fields['category'].queryset = Categories.objects.all()
+        self.fields['category'].label = 'Select a Category'
+        self.fields['category'].empty_label = 'Choose Category'
           
 
 class ProfileForm(forms.ModelForm):
@@ -76,3 +78,12 @@ class SignUpForm(UserCreationForm):
         if User.objects.exclude(pk=current_user.pk).filter(username=username).exists():
             raise forms.ValidationError("A user with this username already exists.")
         return username
+
+
+class CategoryFilterForm(forms.Form):
+    category = forms.ModelChoiceField(
+        queryset=Categories.objects.all(),
+        required=False,
+        label='Select a Category',
+        empty_label='All Categories'
+    )

@@ -5,17 +5,31 @@ from django.dispatch import receiver
 from django import forms 
 from django.db import models
 from datetime import datetime
+from django.utils.text import slugify
 
+class Categories(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+            verbose_name = "Categories"
+            verbose_name_plural = "Categories"
+            db_table = 'categories'  # Ex
 
 class Product(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100)
-    product_description = models.CharField(max_length=5000, default="", null=True,blank=True)
+    product_description = models.CharField(max_length=5000, default="", null=True, blank=True)
     product_price = models.CharField(max_length=500, default="", null=True)
     product_link = models.CharField(max_length=500, default="", null=True)
-    image = models.ImageField(upload_to='static',blank=True)
+    image = models.ImageField(upload_to='static', blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-   
+    category = models.ForeignKey(Categories, on_delete=models.SET_NULL, null=True, blank=True)  # Changed to ForeignKey
+
     def __str__(self):
         return self.name
    

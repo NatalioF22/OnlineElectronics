@@ -2,37 +2,56 @@
 {% load static %}
 
 <style>
-/* Large screens */
-@media (min-width: 1200px) {
-  img {
-    width: 400px;
-    height: 200px;
+  /* Base styles for images to ensure consistency */
+  .img-fluid {
+      width: 100%;  /* Make the image width responsive to the container */
+      height: 200px; /* Fixed height for all images */
+      object-fit: cover; /* Ensures that the images cover the area without distortion */
+      object-position: center; /* Centers the image within the element */
   }
-}
-
-/* Medium screens */
-@media (max-width: 1199px) and (min-width: 768px) {
-  img {
-    width: 300px;
-    height: auto;
-    max-height: 225px;
+  
+  /* Cards to maintain consistent layout */
+  .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Adjusts spacing inside the card */
+      align-items: center;  /* Aligns items in the center of the card horizontally */
+      text-align: center;  /* Centers the text within each card */
   }
-}
-
-/* Small screens */
-@media (max-width: 767px) {
-  img {
-    width: 200px;
-    height: auto;
-    max-height: 150px;
+  
+  .card-img-top {
+      width: 100%;  /* Images take full width of the card */
+      height: 200px; /* Fixed height to ensure consistency */
   }
-}
-
-</style>
+  
+  /* Ensuring that the card-body does not squash the image in smaller screens */
+  .card-body {
+      padding: 15px;
+  }
+  
+  /* Responsive adjustments for different screen sizes */
+  @media (min-width: 1200px) {
+      .card-img-top {
+          height: 200px;
+      }
+  }
+  
+  @media (max-width: 1199px) and (min-width: 768px) {
+      .card-img-top {
+          height: 200px;
+      }
+  }
+  
+  @media (max-width: 767px) {
+      .card-img-top {
+          height: 200px;
+      }
+  }
+  </style>
+  
+  
 
 <body>
-
-
   <!-- ======= Top Bar ======= -->
 
   <!-- ======= Header ======= -->
@@ -41,88 +60,44 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container" data-aos="zoom-out" data-aos-delay="100">
-        
-      <h1>Welcome to <span>Online Electronic Store</span></h1>
+      <h1>Welcome to <span> TradeNexus</span></h1>
       <h2>Our business specializes in curating and showcasing an extensive range of electronics products on our webpage, guiding users to the best deals and seamlessly redirecting them to the corresponding website.</h2>
       <div class="d-flex">
         <a href="#featured-services" class="btn-get-started scrollto">Get Started</a>
-        
-       
       </div>
     </div>
   </section><!-- End Hero -->
 
   <main id="main">
-
-   <!-- ======= Featured Services Section ======= -->
-   <section id="featured-services" class="featured-services">
-    <div class="container" data-aos="fade-up">
-       <div class="row">
+    <!-- ======= Featured Services Section ======= -->
+    <section id="featured-services" class="featured-services">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
           {% if productposts %}
-             {% for product in productposts %}
-             <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-3">
-                <div class="card">
-                   <img src="{{ product.image.url }}" class="card-img-top picture" alt="{{product.name}}" >
-                   <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-                      <h4 class="title"><a href="{% url 'product_details' pk=product.id %}">{{ product.name | title}}</a></h4>
-                      <p class="description lead">${{ product.product_price }}</p>
-                      <a href="{{product.product_link}}" class="btn btn-secondary">Buy</a>
-                   </div>
+            {% for product in productposts %}
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-3">
+              <div class="card">
+                {% if product.image %}
+                  <img src="{{ product.image.url }}" class="card-img-top" alt="{{product.name}}" height="200px" width="150px" style="object-fit:contain">
+                {% else %}
+                  <img src="{% static 'img/default_image.jpeg' %}" class="card-img-top" alt="Default Image" height="200px" width="100%" style="object-fit:contain">
+                {% endif %}
+                <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                  <h4 class="title"><a href="{% url 'product_details' pk=product.id %}">{{ product.name | title}}</a></h4>
+                  <p class="description lead">${{ product.product_price }}</p>
+                  <a href="{{product.product_link}}" class="btn btn-secondary">Buy</a>
                 </div>
-             </div>
-             {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
           {% endif %}
-       </div>
-    </div>
- </section>
-
-
-<!-- End Featured Services Section -->
+        </div>
+      </div>
+</section><!-- End Featured Services Section -->
 
     <!-- ======= About Section ======= -->
-    <section id="about" class="about section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>About</h2>
-          <h3>Find Out More <span>About Us</span></h3>
-          <p>"Discover Electronics Delight: Your Trusted Source for Fast and Private Product Searches!"</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
-            <img src="{% static 'affiliate/assets/img/about.jpg'%}" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
-            <h3>Discover the ultimate electronics shopping experience with us.</h3>
-            <p class="fst-italic">
-              At our company, our mission is to provide a comprehensive platform for users to easily find and access a wide variety of electronics products. 
-            </p>
-            <ul>
-              <li>
-                <i class="bx bx-store-alt"></i>
-                <div>
-                  <h5>Our online electronics platform is not only free to use, but also incredibly user-friendly, ensuring a seamless browsing and shopping experience for all.</h5>
-                  <p></p>
-                </div>
-              </li>
-              <li>
-                <i class="bx bx-images"></i>
-                <div>
-                  <h5>We take pride in creating an ad-free and commercial-free environment, allowing our users to explore electronics products without any distractions or interruptions</h5>
-                  <p></p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End About Section -->
+   
 
     <!-- ======= Skills Section ======= -->
- 
-
   </main><!-- End #main -->
-
   {% endblock %}

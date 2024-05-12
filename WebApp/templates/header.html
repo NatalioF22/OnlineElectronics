@@ -1,4 +1,6 @@
-{% load static %}
+
+
+  {% load static %}
 <style>
   /* Styling for the popup window */
   .popup {
@@ -17,39 +19,59 @@
   }
 </style>
 <header id="header" class="d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
+  <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="{% url 'home' %}">Buy Electronics<span>.</span></a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
+    <h1 class="logo"><a href="{% url 'home' %}">TradeNexus<span>.</span></a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <form class="d-flex" role="search" method = "POST" action = "{% url 'search_products' %}">
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li>
+          <form class="d-flex" role="search" method="POST" action="{% url 'search_products' %}">
             {% csrf_token %}
-            <input class="form-control me-2" type="search" placeholder="Search Product" aria-label="Search" name = "searched">
+            <input class="form-control me-2" type="search" placeholder="Search Product" aria-label="Search" name="searched">
             <button class="btn btn-outline-info" type="submit">Search</button>
           </form>
+        </li>
+        <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
+        <li class="dropdown"><a href="#"><span>Features</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="{% url 'add_product' %}">Add Product</a></li>
+            <li class="dropdown"><a href="{% url 'category_list' %}"><span>All Categories</span> <i class="bi bi-chevron-right"></i></a>
+             
+               
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="{% url 'about_us' %}"><span>About</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+              <li><a href="{% url 'about_us' %}">About Us</a></li>
+              <li><a href="#" onclick="openPopup()">Privacy Policy</a></li>
+          </ul>
+      </li>
+      
+        
+        {%if user.is_authenticated%}
+        <li class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="{% url 'profile' request.user.id %}">My Profile</a></li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+          </ul>
+        </li>
+        {%else%}
+        <li><a class="nav-link scrollto" href="{% url 'login'%}">Login</a></li>
+        <li><a class="nav-link scrollto" href="{% url 'register'%}">Register</a></li>
+        {%endif%}
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
 
-          <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services" onclick="openPopup()">Privacy Policy</a></li>
-          {%if user.is_authenticated%}
-           
-            <li><a class="nav-link scrollto" href="{% url 'add_product' %}">Add Product</a></li>
-            <li><a class="nav-link scrollto" href="{% url 'profile' request.user.id %}">My Profile</a></li>
-            <li><a class="nav-link scrollto" href="{% url 'logout'%}">Logout</a></li>
-            {%else%}
-            <li><a class="nav-link scrollto" href="{% url 'login'%}">Login</a></li>
-          {%endif%}
-         
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+  </div>
+  <div id="popup" class="popup">
+    <h2>Privacy Policy</h2>
 
-    </div>
-    <div id="popup" class="popup">
-      <h2>Privacy Policy</h2>
       <p>
         Protecting your private information is our priority. This Statement of Privacy applies to nataliofernandes.com and governs data collection and usage. For the purposes of this Privacy Policy, unless otherwise noted, all references to "self" include nataliofernandes.com. The self website is an information site. By using the self website, you consent to the data practices described in this statement.
       </p>
@@ -145,31 +167,32 @@
       <p>
         self
         <br>
-        359 w elm st
+        123 main st
         <br>
-        Brockton, Massachusetts 02301
+        Boston, Massachusetts 02301
       </p>
       <p>
-        Email Address: nataliogomes707@GMAIL.COM
+        Email Address: tradenexus.online@domain.com
         <br>
-        Telephone number: 5086858063
+        Telephone number: +1 123 456 7890
       </p>
       
       <p>
-        Effective as of July 03, 2023
+        Effective as of May 12, 2024
       </p>
-        <button onclick="closePopup()" class="btn btn-primary">Close</button>
-    </div>
-    
-    <script>
-      function openPopup() {
-        var popup = document.getElementById("popup");
-        popup.style.display = "block";
-      }
-  
-      function closePopup() {
-        var popup = document.getElementById("popup");
-        popup.style.display = "none";
-      }
-    </script>
-  </header><!-- End Header -->
+    <!-- ... (privacy policy content remains the same) ... -->
+    <button onclick="closePopup()" class="btn btn-primary">Close</button>
+  </div>
+
+  <script>
+    function openPopup() {
+      var popup = document.getElementById("popup");
+      popup.style.display = "block";
+    }
+
+    function closePopup() {
+      var popup = document.getElementById("popup");
+      popup.style.display = "none";
+    }
+  </script>
+</header><!-- End Header -->
