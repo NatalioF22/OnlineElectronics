@@ -1,117 +1,99 @@
-# OnlineElectronics
+# TradeNexus
+
+
+## Introduction
+
+Welcome to the repository for our Django-based E-commerce platform. This project aims to provide a comprehensive and scalable solution for online marketplaces. We have meticulously designed our Django models to capture various aspects of the e-commerce ecosystem, from user profiles and favorites to a wide array of product categories.
+
+## Table of Contents
+
+1. [Features](#features)
+2. [Database Models](#database-models)
+3. [Installation and Setup](#installation-and-setup)
 
 ---
 
-# BuyElectronics.cloud 🛒
+## Features
 
-[![Django Version](https://img.shields.io/badge/Django-3.x-green)](https://www.djangoproject.com/)
-[![Python Version](https://img.shields.io/badge/Python-3.x-blue)](https://www.python.org/)
+- **User Authentication**: Utilizes Django's built-in `User` model for secure and reliable authentication.
+- **Profiles**: Extended user profiles with additional fields such as social media links, address, and profession.
+- **Products**: Rich product listings with categories, descriptions, images, and pricing details.
+- **Favoriting**: Users can favorite products.
+- **Conversations**: Allows for user-to-user communication.
+- **Comprehensive Categories**: Covers a broad range of product categories, from electronics to luxury brands.
 
-## Table of Contents 📖
+---
 
-- [Overview](#overview-)
-- [Features](#features-)
-- [Installation](#installation-)
-- [Usage](#usage-)
-- [Database Models](#database-models-)
-- [Contributing](#contributing-)
-- [License](#license-)
+## Database Models
 
-## Overview 🌐
+### 1. Product
 
-BuyElectronics.cloud is a Django-based web application designed to provide a seamless shopping experience for electronics enthusiasts. Users can create profiles, list products, and post their favorite gadgets with ease.
+- **owner**: Foreign Key to User
+- **name**: Product name
+- **product_description**: A detailed description of the product
+- **product_price**: Price of the product
+- **category**: Enumerated choices capturing product categories
+- **product_link**: Link to product page
+- **image**: Image upload
+- **created_at**: Timestamp of product creation
+- **favorited_by**: Many-to-Many relationship with Users through 'ProductFavorite'
 
-## Features 🌟
+### 2. Profile
 
-- **User Authentication:** Secure login and signup functionalities.
-- **Profile Management:** Users can update personal information and social media links.
-- **Product Listings:** Users can create, update, and delete electronic product listings.
-- **Social Interactions:** Users can post about their favorite products.
+- **user**: One-to-One relationship with Django's User model
+- **first_name, last_name**: User's name
+- **profile_image**: Profile image upload
+- **profile_bio**: A short bio
+- **social media links**: Facebook, LinkedIn, Instagram
+- **address information**: State, Zip Code, Address, City, Country
+- **email**: Email address
+- **phone_number**: Contact number
+- **profession**: User's profession
 
-## Installation 🛠️
+### 3. Conversation
 
-### Prerequisites
+- **sender, receiver**: Foreign keys to User
+- **text**: Conversation text
+- **timestamp**: Timestamp of the conversation
+- **history**: Text field to store conversation history
 
-- Python 3.x
-- Django 3.x
+### 4. ProductFavorite
 
-### Steps
+- **user**: Foreign Key to User
+- **product**: Foreign Key to Product
+- **date_added**: Timestamp when added to favorites
 
-1. **Clone the Repository**
+For more details, please refer to the `models.py` file.
 
-    ```bash
-    git clone https://github.com/NatalioF22/onlinelectronics.git
+---
+
+## Installation and Setup
+
+1. **Clone the repository**
+    ```
+    git clone https://github.com/NatalioF22/TradeNexus.git
     ```
 
-2. **Navigate to Directory**
-
-    ```bash
-    cd onlinelectronics
+2. **Navigate to the project directory**
+    ```
+    cd TradeNexus
     ```
 
-3. **Install Dependencies**
-
-    ```bash
+3. **Install dependencies**
+    ```
     pip install -r requirements.txt
     ```
 
-4. **Migrate Database**
-
-    ```bash
+4. **Run Migrations**
+    ```
     python manage.py migrate
     ```
 
-5. **Run Development Server**
-
-    ```bash
+5. **Start Development Server**
+    ```
     python manage.py runserver
     ```
 
-## Usage 🚀
-
-After starting the development server, navigate to `http://localhost:8000/` to access the application.
-
-## Database Models 🗄️
-
-### Product
-
-- `owner`: Foreign key to User
-- `name`: Product name
-- `product_description`: Product description
-- `product_price`: Product price
-- `product_link`: External link to product
-- `image`: Image of the product
-- `created_at`: Time of product listing creation
-
-### Profile
-
-- `user`: One-to-One field with User
-- `first_name`: First name of user
-- `last_name`: Last name of user
-- `profile_image`: User's profile image
-- `profile_bio`: User's biography
-- `website_link`: User's website
-- `facebook_link`: User's Facebook
-- `instagram_link`: User's Instagram
-- `linkedIn_link`: User's LinkedIn
-
-### ProductPost
-
-- `user`: Foreign key to User
-- `product_name`: Name of the product
-- `product_description`: Description of the product
-- `created_at`: Time of post creation
-- `product_link`: External link to the product
-- `product_price`: Price of the product
-
-## Contributing 🤝
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-
-
 ---
 
-
-
-I hope this README serves you well! Feel free to customize it according to your specific requirements.
+Feel free to use this README as a template for your project. Good luck and happy coding!
